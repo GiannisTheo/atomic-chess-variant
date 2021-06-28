@@ -61,7 +61,7 @@ def encode(fen):
   
   # en passant encoding
   if en_passant != '-':
-    x[7,8-ord(en_passant[0])+97,int(en_passant[1])]=1
+    x[7,8-int(en_passant[1]),ord(en_passant[0])-97]=1
   
   # castling rights encoding
   if castling_rights != '-':
