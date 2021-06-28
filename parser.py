@@ -25,6 +25,12 @@ def move_parser(filename,filesave):
         board=chess.variant.AtomicBoard()
         print("finished game ",counter)
         counter+=1
+    print("normalize the frequency")
+    for position in table:
+        s=sum(table[position].values())
+        for move in table[position]:
+            table[position][move]=table[position][move]/s
+    print("finished normalizing")
     output = open(filesave, 'wb')
     joblib.dump(table, output)
     output.close()
@@ -54,6 +60,10 @@ def result_parser(filename,filesave):
         board=chess.variant.AtomicBoard()
         print("finished game ",counter)
         counter+=1
+    print("normalize results...")
+    for position in table:
+        table[position]["result"]=table[position]["result"]/table[position]["total"]
+    print("finished normalizing")
     output = open(filesave, 'wb')
     joblib.dump(table, output)
     output.close()
@@ -61,10 +71,13 @@ def result_parser(filename,filesave):
 
 if __name__ == "__main__":
     #move_parser("filtered_2200.pgn","move_table2200")
-    result_parser("filtered_2200.pgn","result_table2200")
+    #result_parser("filtered_2200.pgn","result_table2200")
     #f = open("move_table2200","rb")
     #f = open("result_table2200","rb")
+
+    #move_parser("sampleg.pgn","test_table")
+    #f = open("test_table","rb")
     #table= joblib.load(f)
-    #print(table)
+    #print(table) 
     #print(table[chess.variant.AtomicBoard().fen()])
     #print(len(table))
